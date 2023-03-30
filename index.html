@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+    FACTORIA F5 - FUNDACIÓN TOMILLO
+    FECHA DE INICIO: 27-03-2023
+    FECHA DE FIN: 03-04-2023
+    FORMADOR: Ana / Jorge
+    ALUMNO: Juan Carlos Macías Salvador
+    DESCRIPCIÓN: Desarrollar una página web con html, css y javascript, temática libre.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all">
+    <!-- info donde reparar en og -->
+    <meta property="og:url" content="">
+    <meta property="og:title"
+        content="Mi IA de entretenimiento, Poema Haiku, juego de palabras, número aleatorios para la primitiva">
+    <meta property="og:description"
+        content="Mi IA de entretenimiento usa chat GPT para crear poemas Haiku personales, al igual que selecciona la palabra del juego y los números al azar.">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/otromas.css">
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
+    <title>Mi IA de entretenimiento</title>
+</head>
+
+<body id="login-img3-body">
+    <section class="principal">
+        <header class="header">
+            <div class="cabecera sombra">
+                <h1>Mi IA de entretenimiento</h1>
+            </div>
+            <div id="estado">
+                <i accesskey="a" id="accesibilidad" class="fa fa-universal-access efecto"
+                    title="Atajos de accesibilidad" aria-hidden="true"></i>
+                <!--
+                    <i class="fa fa-volume-up" aria-hidden="true"></i>
+                -->
+                <i accesskey="m" id="sonido" class="fa fa-volume-up efecto" title="Quitar/poner sonido"
+                    aria-hidden="true"></i>
+            </div>
+        </header>
+
+        <div class="widget-1">
+            <div>
+                <a accesskey="1" id="poemas" class="hexagono" title="Escuchar un poema Haiku">
+                    <span class="hexagono-content sombra">
+                        <strong>Poema</strong> Haiku
+                    </span>
+                </a>
+
+            </div>
+            <div>
+                <a accesskey="2" id="palabras" class="hexagono" title="Jugar a palabras">
+                    <span class="hexagono-content sombra">
+                        <strong>Jugar a</strong> palabras
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a accesskey="3" id="azar" class="hexagono" title="Número al azar para la primitiva">
+                    <span class="hexagono-content sombra">
+                        <strong>Número</strong> azar
+                    </span>
+                </a>
+            </div>
+            <!-- para mostrar el texto de salida en caso de no tener activado el audio -->
+            <div id="texto" class="escribirtexto"></div>
+        </div>
+
+        <footer class="footer">
+            Todos los derechos reservados - JCMS
+        </footer>
+    </section>
+
+    <!-- Ventana emergente -->
+    <div class="fondoModal_A">
+        <!-- contenedor modal -->
+        <div class="contenedorModal_A">
+            <!-- Contenido ventana modal -->
+            <div class="contenidoModal_A">
+                <section class="seccion_A">
+                    <h2 class="text-uppercase">Uso de cookies</h2>
+                    <p>Vamos a cargar una cookie "técnica" para guardar tu nombre</p>
+                    <input name="nombre" id="nombre" placeholder="Escribe aquí tu nombre" autofocus>
+                    <p>¿Me permites crear esta cookie?</p>
+                </section>
+                <button accesskey="s" class="si efecto">Sí</button>
+                &nbsp;
+                <button accesskey="n" class="no efecto">No</button>
+
+            </div> <!-- Contenido ventana modal -->
+        </div> <!-- FIN contenedor modal B -->
+    </div>
+    <!-- FIN ventana -->
+
+    <!-- Ventana emergente juego -->
+    <div class="fondoModal_B">
+        <!-- contenedor modal -->
+        <div class="contenedorModal_B">
+            <!-- Contenido ventana modal -->
+            <div class="contenidoModal_B">
+                <h2 class="text-uppercase">Juego de las palabras</h2>
+                <!-- Mostrar ell texto de salida de aciertos -->
+                <div id="mostrar"></div>
+                <div class="comprobar">
+
+                    <i accesskey="p" id="pista" class="fa fa-search-plus efecto" title="Pedir ayuda o una pista"
+                        aria-hidden="true"></i>
+                    <p id="resultado"></p>
+                    <input id="palabraPuesta" type="text" value="" name="texto"
+                        placeholder="Escribe la palabras que crees pueda ser" autofocus>
+                    <button accesskey="v" onclick="comprobar()">Comprobar la palabra</button>
+                </div>
+                <button accesskey="c" id="cerrarModal" class="btn">Cerrar</button>
+            </div> <!-- Contenido ventana modal -->
+        </div> <!-- FIN contenedor modal B -->
+    </div>
+    <!-- FIN ventana juego -->
+    <!-- Ventana emergente accesibilidad -->
+    <div class="fondoModal_C">
+        <!-- contenedor modal -->
+        <div class="contenedorModal_C">
+            <!-- Contenido ventana modal -->
+            <div class="contenidoModal_C">
+                <h2 class="text-uppercase">Accesibilidad</h2>
+                <!-- Mostrar ell texto de salida de aciertos -->
+                <ul>
+                    <li>1 - Poemas de Haiku</li>
+                    <li>2 - Jugar a palabras</li>
+                    <li>3 - Número al azar</li>
+                    <li>a - Mostrar atajos accesibilidad</li>
+                    <li>s - Sí</li>
+                    <li>n - No</li>
+                    <li>c - Cerrar</li>
+                    <li>p - Pista con la palabra elegida</li>
+                    <li>v - Comprobar palabra</li>
+                    <li>m - Quitar sonido / Poner sonido</li>
+                    <li>u - Abrir enlace <a accesskey="u" href="https://developer.mozilla.org/es/docs/Web/HTML/Global_attributes/accesskey"
+                        target="_blank" title="Activar el accesskey">activar el accesskey</a></li>
+                </ul>
+                
+                <button accesskey="c" id="cerrarModalA" class="btn">Cerrar</button>
+            </div> <!-- Contenido ventana modal -->
+        </div> <!-- FIN contenedor modal B -->
+    </div>
+    <!-- FIN ventana accesibilidad -->
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -18,7 +18,7 @@
     //const apiKey = api.recuperarAPI();
     // CLAVE API GPTCHAT
     
-    const apiKey = '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'; 
+    const apiKey = 'sk-typ4qrwhln3Gg6dskYZwT3BlbkFJuKr8ZUtWrRl70MUGS16'; 
     const maxTokens = 75;
 
     async function generateResponse(prompt, retorno) {

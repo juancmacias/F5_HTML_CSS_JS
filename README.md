@@ -1,5 +1,5 @@
 # F5_HTML_CSS_JS
-## Ejercicio para trabajo de clase con html css y javascript
+## Ejercicio para trabajo de clase con html css (grip, flex) y javascript
 # Juan Carlos Macías Salvador
 ***El prototipo se encentra en esta dirección url:***
 [Figma](https://www.figma.com/file/nFXoFsrmBsiYt2Uz9cnofG/Ejercicio-html-css-y-JS?node-id=0%3A1&t=44TknBTixbY1lErc-1)
@@ -12,9 +12,9 @@
 
 Lo que hace es:
 
-+ Escribir desde GPT 'Poema Haiku'
++ Escribir desde GPT 'Poema Haiku' en base al nombre insertado
 + Seleccionar al azar desde GPT una palabra. Nos da ayuda sobre la misma para adivinarla.
-+ No selecciona al azar 6 número del 1 al 49 y del 1 al 6 para el juego de azar.
++ Elige al azar 6 números del 1 al 49 y del 1 al 6 para el juego de azar.
 
 # Cualquier casualidad con la realidad, no tenemos nada que ver.
 

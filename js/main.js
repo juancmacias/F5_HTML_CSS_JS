@@ -1,27 +1,31 @@
-    let decir=true;
+    /*
+
+    FACTORIA F5 - FUNDACIÓN TOMILLO
+    FECHA DE INICIO: 27-03-2023
+    FECHA DE FIN: 03-04-2023
+    FORMADOR: Ana / Jorge
+    ALUMNO: Juan Carlos Macías Salvador
+    DESCRIPCIÓN: Desarrollar una página web con html, css (usar grip y flex) y javascript, temática libre.
+
+*/
+    let decir = true;
     let palabra;
     const texto = document.getElementById("texto");
+    let apiKey;
+    // pruebas para cargar key desde archivo
     var api = {
         recuperarAPI : function(){
             fetch('/js/api.txt')
             .then(res => res.text())
             .then(content => {
-                let lines = content.split(/\n/);
-                //document.getElementById("pruecarga").innerHTML=lines;
-                //lines.forEach(line => console.log(line));
-                console.log("API "+ lines);
-                return lines;
+                apiKey = content.split(/\n/);
+                console.log("API "+ apiKey);
             });
         }
     }
-    // pruebas para cargar key desde archivo
-    //const apiKey = api.recuperarAPI();
-    // CLAVE API GPTCHAT
-    
-    const apiKey = 'sk-typ4qrwhln3Gg6dskYZwT3BlbkFJuKr8ZUtWrRl70MUGS16'; 
     const maxTokens = 75;
 
-    async function generateResponse(prompt, retorno) {
+    async function generateResponse(prompt, retorno) {     
         
         // Hacer una solicitud POST a la API de OpenAI
         const response = await fetch('https://api.openai.com/v1/engines/text-davinci-002/completions', {
@@ -41,9 +45,11 @@
         var generatedText = data.choices[0].text;
         // Hacer algo con la respuesta generada
         console.log(generatedText);
+        // decimos el texto generado si retorno es true
         if(retorno){
             textToAudio(generatedText);
         }else{
+            // limpiamos la palabra seleccionada
             palabra = generatedText.replace(/(\r\n|\n|\r)/gm,'');
             palabra = palabra.replace(/\.+/gm, "");
             palabra = palabra.replace(/\"+/gm, "");
@@ -65,7 +71,7 @@
     /*
     
     Este metodo esta obsoleto
-    por ahora se puede seguir usando hasta que lo elimine del todo
+    por ahora se puede seguir usando hasta que lo eliminen del todo
     
     */
 
@@ -124,6 +130,7 @@
     }
 
     function iniciar() {
+        api.recuperarAPI();
         cambiarImagenFondo();
         let nombre = getCookies();
         if (nombre != "visitante") {
@@ -136,8 +143,9 @@
             $('.cerrarModal_A').on('click', mostrarVentana);
             mostrarVentana();
         }
-    }
 
+        
+    }
 
     function mostrarVentana() {
         $('.fondoModal_A').fadeIn(400, function () {
@@ -157,14 +165,66 @@
         document.getElementById("nombre").focus();
     }
 
+    document.querySelectorAll(".pres").forEach((e) => {
+        e.addEventListener("click", () => {
+           console.log("pres: "+ e.id);
+           texto.innerHTML = "Respuesta de la IA:";
+           switch (e.id){
+                case "poemas":
+                        generateResponse("Escribe un haiku corto con mi nombre " + getCookies() + " en castellano", true);
+                    break;
+                case "sonido":
+                    const parrafo = document.getElementById("sonido");
+                    if(parrafo.classList.contains('fa-volume-up')){
+                        decir = false;
+                        texto.style.display="block";
+                        parrafo.classList.replace('fa-volume-up', 'fa-newspaper-o');
+                    }else{
+                        decir = true;
+                        texto.style.display="none";
+                        parrafo.classList.replace('fa-newspaper-o', 'fa-volume-up');
+                    }
+                    break;
+                case "azar":
+                        generateResponse("Dime cuanta suerte voy a tener. Dime seis numero al azar del 1 al 49. Y los complementarios del 1 al 6 pero solo dos, tambien al azar", true);            
+                    break;
+                case "palabras":
+                    juegopalabras();
+                    document.getElementsByClassName("fondoModal_A")[0].style.display="block";
+                    document.getElementsByClassName("contenidoModal_B")[0].style.display="block";
+                    
+                    break;
+                case "accesibilidad":
+                        document.getElementsByClassName("fondoModal_A")[0].style.display="block";
+                        document.getElementsByClassName("contenidoModal_C")[0].style.display="block";
+                    break;
+                case "pista":
+                        textToAudio("Recuerda la palabra empieza por"+palabra[0]+" y termina por "+palabra[palabra.length-1]+". Te diré tambien...");
+                        generateResponse("dime un sinonimo de " + palabra + ", sin decirme la palabra.", true);
+                    break;
+                case "cerrarModalA":
+                        document.getElementsByClassName("fondoModal_A")[0].style.display="none";
+                        document.getElementsByClassName("contenidoModal_C")[0].style.display="none";
+                    break;
+                case "cerrarModal":
+                        document.getElementsByClassName("fondoModal_A")[0].style.display="none";
+                        document.getElementsByClassName("contenidoModal_B")[0].style.display="none";
+                        textToAudio("Vale, cierro la ventana.");
+                        palabra = "";
+                        document.getElementById("mostrar").innerHTML="";
+                        document.getElementById("palabraPuesta").value="";
+                        document.getElementById("resultado").innerText = "";
+                    break;
+           }
+        });
+     });
 
     function cerrarModal_A() {
-        $('.fondoModal_A, .contenidoModal_A').fadeOut(300);
+        document.getElementsByClassName("fondoModal_A")[0].style.display="none";
+        document.getElementsByClassName("contenidoModal_A")[0].style.display="none";
         //textToAudio("Qué bien que estes por aquí " + getCookies()+". ¿que quieres hacer ahora?");
         generateResponse("Dame una bienvenida calurosa. Dime el tiempo que hace en Madrid. Preguntame que quiero hacer ahora. En castellano.", true);
     }
-
-
     
     function acepta_cookie() {
         nombre = document.getElementById("nombre").value;
@@ -178,69 +238,8 @@
         location.reload();
     }
 
-    document.getElementById('sonido').addEventListener('click', function () {
-        const parrafo = document.getElementById("sonido");
-        texto.innerHTML= "Respuesta de la IA:";
-        if(parrafo.classList.contains('fa-volume-up')){
-            decir = false;
-            texto.style.display="block";
-            parrafo.classList.replace('fa-volume-up', 'fa-newspaper-o');
-        }else{
-            decir = true;
-            texto.style.display="none";
-            parrafo.classList.replace('fa-newspaper-o', 'fa-volume-up');
-        }
-    });
-
-    document.getElementById('poemas').addEventListener('click', function () {
-        texto.innerHTML= "Respuesta de la IA:";
-        generateResponse("Escribe un haiku corto con mi nombre " + getCookies() + " en castellano", true);
-    });
-
-    document.getElementById('azar').addEventListener('click', function () {
-        texto.innerHTML= "Respuesta de la IA:";
-        generateResponse("Dime cuanta suerte voy a tener. Dime seis numero al azar del 1 al 49. Y los complementarios del 1 al 6 pero solo dos, tambien al azar", true);
-    });
-    
-    document.getElementById('palabras').addEventListener('click', function () {      
-        juegopalabras();
-        $('.fondoModal_B').fadeIn(400, function () {
-            $('.contenidoModal_B').fadeIn(400);
-        });
-    });
-    
-    document.getElementById('cerrarModal').addEventListener('click', function () {
-        textToAudio("Vale, cierro la ventana.");
-        $('.fondoModal_B').fadeOut(400, function () {
-            $('.contenidoModal_B').fadeOut(400);
-        });
-        palabra = "";
-        document.getElementById("mostrar").innerHTML="";
-        document.getElementById("palabraPuesta").value="";
-        document.getElementById("resultado").innerText = "";
-    });
-
-    document.getElementById('pista').addEventListener('click', function () {
-        texto.innerHTML= "Respuesta de la IA:";
-        textToAudio("Recuerda la palabra empieza por"+palabra[0]+" y termina por "+palabra[palabra.length-1]+". Te dire tambien...");
-        generateResponse("dime sinonimos de " + palabra + ", sin decirme la palabra.", true);
-    });
-
-    document.getElementById('accesibilidad').addEventListener('click', function () {
-        texto.innerHTML= "Respuesta de la IA:";
-        $('.fondoModal_C').fadeIn(400, function () {
-            $('.contenidoModal_C').fadeIn(400);
-        });
-    });
-
-    document.getElementById('cerrarModalA').addEventListener('click', function () {
-        $('.fondoModal_C').fadeOut(400, function () {
-            $('.contenidoModal_C').fadeOut(400);
-        });
-    });
-
     function juegopalabras(){
-        generateResponse("Dime una palabra al azar no mas larga de 7 letras.", false);
+        generateResponse("Dime una palabra al azar no mas larga de 7 letras y que la primera palabra este en minuscula.", false);
         textToAudio("Mostrando la ventana para el juego...");
         textToAudio("Déjame que busque una palabra interesante para ti.");
         setTimeout(function(){
@@ -293,4 +292,6 @@
             textToAudio(getCookies() + " La palabra que has puesto no es válida, y además no tienes el mismo número de caracteres. Inténtalo de nuevo.");
         }
     }
+
+
     window.onload = iniciar();

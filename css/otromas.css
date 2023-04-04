@@ -1,3 +1,14 @@
+/*
+
+    FACTORIA F5 - FUNDACIÓN TOMILLO
+    FECHA DE INICIO: 27-03-2023
+    FECHA DE FIN: 03-04-2023
+    FORMADOR: Ana / Jorge
+    ALUMNO: Juan Carlos Macías Salvador
+    DESCRIPCIÓN: Desarrollar una página web con html, css (usar grip y flex) y javascript, temática libre.
+
+*/
+
 body {
     color: #797979;
     background: #eeeeee;
@@ -5,6 +16,10 @@ body {
     padding: 0px !important;
     margin: 0px !important;
     font-size: 14px !important;
+    -webkit-background-size: cover!important;
+    -moz-background-size: cover!important;
+    -o-background-size: cover!important;
+    background-size: cover!important;
 }
 
 h1,
@@ -16,14 +31,6 @@ h5 {
 
 }
 
-#login-img3-body {
-    -webkit-background-size: cover!important;
-    -moz-background-size: cover!important;
-    -o-background-size: cover!important;
-    background-size: cover!important;
-
-
-    }
 .principal {
     height: 100vh;
     display: grid;
@@ -43,8 +50,7 @@ h5 {
         "footer";
 }
 
-.principal .header {
-    *background-color: #2a2aaa;
+.principal header {
     color: white;
 
     grid-area: header;
@@ -54,7 +60,7 @@ h5 {
     text-align: center;
 }
 
-.principal .footer {
+.principal footer {
     *background: #2a2aaa;
     color: white;
     grid-area: footer;
@@ -65,7 +71,7 @@ h5 {
     font-size: 1.5em;
 }
 
-.principal .widget-1 {
+.principal main {
     color: white;
     height: 88vh;
     text-align: center;
@@ -76,7 +82,7 @@ h5 {
     flex-wrap: wrap;
 }
 
-.principal .widget-1 div {
+.principal main div {
     margin: 25px;
     width: auto;
 }
@@ -329,7 +335,7 @@ h5 {
         transform: unset;
         transition: unset;
     }
-    .principal .widget-1 div {
+    .principal main div {
         margin: 25px;
         width: auto;
     }
@@ -343,7 +349,7 @@ h5 {
         grid-template-rows: 5vh 91vh 5vh;
 
     }
-    .principal .footer {
+    .principal footer{
         font-size: 0.5em;
     }
     #texto{
@@ -371,7 +377,7 @@ h5 {
         grid-template-rows: 5vh 91vh 5vh;
 
     }
-    .principal .footer {
+    .principal footer{
         font-size: 0.8em;
     }
     #texto{

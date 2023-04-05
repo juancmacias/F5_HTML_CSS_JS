@@ -15,7 +15,7 @@
 
     const api = {
         recuperarAPI : function(){
-            fetch('http://www.juancarlosmacias.es/api.php')
+            fetch('https://www.donde-reparar.com/game/api.php')
             .then(res=>res.json())
             .then(json=>{
                 apiKey = json.key;

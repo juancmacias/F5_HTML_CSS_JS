@@ -273,8 +273,7 @@ h5 {
 
 /*VENTANA EMERGENTE*/
 
-.fondoModal_A,
-.fondoModal_B, .fondoModal_C {
+.fondoModal_A{
     position: fixed;
     top: 0;
     left: 0;
@@ -286,11 +285,9 @@ h5 {
     z-index: 9999;
 }
 
-.contenedorModal_A,
-.contenedorModal_B, .contenedorModal_C {
+.contenedorModal_A {
     width: 100vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -303,6 +300,8 @@ h5 {
 
 .contenidoModal_A,
 .contenidoModal_B, .contenidoModal_C {
+    animation-duration: 1s;
+    animation-name: slidein;
     display: none;
     /*tanto el fondo como el contenido modal se ocultan para luego mostrar el contenido tras cargar el fondo*/
 
@@ -318,6 +317,7 @@ h5 {
     margin: 30px;
     font-size: 2.2em;
 }
+
 @media screen and (max-height:740px){
     .hexagono {
         width: 140px!important;
@@ -387,3 +387,11 @@ h5 {
         width: 65vw!important;
     }
 }
+@keyframes slidein {
+    from {
+        transform: scale(0.0);
+    }
+    to {
+        transform: scale(1);
+    }
+  }

@@ -12,21 +12,22 @@
     let palabra;
     const texto = document.getElementById("texto");
     let apiKey;
-    // pruebas para cargar key desde archivo
-    var api = {
+    //  cargar key desde archivo
+    const api = {
         recuperarAPI : function(){
             fetch('/js/api.txt')
             .then(res => res.text())
             .then(content => {
                 apiKey = content.split(/\n/);
-                console.log("API "+ apiKey);
+                mensajeConsola("API 1 "+ apiKey);
             });
         }
     }
     const maxTokens = 75;
-
+    //const apiKey = "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";
+    // Generar chat GPT
     async function generateResponse(prompt, retorno) {     
-        
+        mensajeConsola("API 2 "+ apiKey);
         // Hacer una solicitud POST a la API de OpenAI
         const response = await fetch('https://api.openai.com/v1/engines/text-davinci-002/completions', {
             method: 'POST',
@@ -44,18 +45,18 @@
         const data = await response.json();
         var generatedText = data.choices[0].text;
         // Hacer algo con la respuesta generada
-        console.log(generatedText);
+        mensajeConsola(generatedText);
         // decimos el texto generado si retorno es true
         if(retorno){
             textToAudio(generatedText);
         }else{
             // limpiamos la palabra seleccionada
-            palabra = generatedText.replace(/(\r\n|\n|\r)/gm,'');
-            palabra = palabra.replace(/\.+/gm, "");
-            palabra = palabra.replace(/\"+/gm, "");
-            palabra = palabra.replace(/\ +/gm, "");
-            palabra = palabra.replace(/\'/gm, "");
-            console.log("la he dicho: "+palabra);
+            palabra = generatedText.replace(/(\r\n|\n|\r|\.)+/gm,'')
+                                    .replace(/\"+/gm, '')
+                                    .replace(/\ +/gm, '')
+                                    .replace(/\'/gm, '');
+        
+            mensajeConsola("la he dicho: "+palabra);
         }
     }
 
@@ -88,12 +89,12 @@
             let speech = new SpeechSynthesisUtterance();
             // recuperamos el lenguaje del navegaador
             let ln = navigator.language || navigator.userLanguage;
-            console.log("El lenguaje es: " + ln);
+            mensajeConsola("El lenguaje es: " + ln);
             //Importante para dialecto del audio
             speech.lang = ln;
             // texto que decir
             speech.text = msg;
-            console.log("El mensaje es: " + msg);
+            mensajeConsola("El mensaje es: " + msg);
             // nivel de volumen
             speech.volume = 1;
             // velocidad de pronunciación
@@ -119,8 +120,7 @@
                 micookie = listaCookies[i];
                 let ca = micookie.split('=');
                 nombre = ca[1];
-                console.log(ca[1]);
-                
+                mensajeConsola(ca[1]);
                 buscar++;
             }else{
                 nombre = "visitante";
@@ -134,13 +134,11 @@
         cambiarImagenFondo();
         let nombre = getCookies();
         if (nombre != "visitante") {
-            console.log("Mi cookie es: existe");
-            
+            mensajeConsola("Mi cookie es: existe");
             cerrarModal_A();
         } else {
             textToAudio("Bienvenido usuario desconocido. Me gustaria saber tu nombre.");
-            console.log("Mi cookie es: no hay");
-            $('.cerrarModal_A').on('click', mostrarVentana);
+            mensajeConsola("Mi cookie es: no hay");
             mostrarVentana();
         }
 
@@ -148,11 +146,11 @@
     }
 
     function mostrarVentana() {
-        $('.fondoModal_A').fadeIn(400, function () {
-            $('.contenidoModal_A').fadeIn(400);
-        });
-        console.log("mostrando ventana emergente de las cookies");
-        $('.si').on('click', function(){
+        document.getElementsByClassName("fondoModal_A")[0].style.display="block";
+        document.getElementsByClassName("contenidoModal_A")[0].style.display="block";
+       
+        mensajeConsola("mostrando ventana emergente de las cookies");
+        document.getElementsByClassName("si")[0].addEventListener('click', function(){
             let nomInset = document.getElementById("nombre").value;
             if(nomInset.length >= 1){
                 acepta_cookie();
@@ -160,38 +158,39 @@
                 textToAudio("No he detectado que escribieras nada en la caja de texto.");
                 textToAudio("Puedes seleccionar el botón naranja, donde pone 'no' y te convertirás en visitante.");
             }
-        } );
-        $('.no').on('click', cerrarModal_A);
-        document.getElementById("nombre").focus();
+        });
+        document.getElementsByClassName("no")[0].addEventListener('click', cerrarModal_A);
+
     }
 
     document.querySelectorAll(".pres").forEach((e) => {
         e.addEventListener("click", () => {
-           console.log("pres: "+ e.id);
+            mensajeConsola("pres: "+ e.id);
+
            texto.innerHTML = "Respuesta de la IA:";
            switch (e.id){
                 case "poemas":
                         generateResponse("Escribe un haiku corto con mi nombre " + getCookies() + " en castellano", true);
                     break;
                 case "sonido":
-                    const parrafo = document.getElementById("sonido");
-                    if(parrafo.classList.contains('fa-volume-up')){
-                        decir = false;
-                        texto.style.display="block";
-                        parrafo.classList.replace('fa-volume-up', 'fa-newspaper-o');
-                    }else{
-                        decir = true;
-                        texto.style.display="none";
-                        parrafo.classList.replace('fa-newspaper-o', 'fa-volume-up');
-                    }
+                        const parrafo = document.getElementById("sonido");
+                        if(parrafo.classList.contains('fa-volume-up')){
+                            decir = false;
+                            texto.style.display="block";
+                            parrafo.classList.replace('fa-volume-up', 'fa-newspaper-o');
+                        }else{
+                            decir = true;
+                            texto.style.display="none";
+                            parrafo.classList.replace('fa-newspaper-o', 'fa-volume-up');
+                        }
                     break;
                 case "azar":
                         generateResponse("Dime cuanta suerte voy a tener. Dime seis numero al azar del 1 al 49. Y los complementarios del 1 al 6 pero solo dos, tambien al azar", true);            
                     break;
                 case "palabras":
-                    juegopalabras();
-                    document.getElementsByClassName("fondoModal_A")[0].style.display="block";
-                    document.getElementsByClassName("contenidoModal_B")[0].style.display="block";
+                        juegopalabras();
+                        document.getElementsByClassName("fondoModal_A")[0].style.display="block";
+                        document.getElementsByClassName("contenidoModal_B")[0].style.display="block";
                     
                     break;
                 case "accesibilidad":
@@ -235,7 +234,8 @@
         document.cookie = "saludo=" + nombre + "; path=/; " + expires;
         // caduca por sesión
         //document.cookie = "saludo=modal; path=/; expires=0";
-        location.reload();
+        //location.reload();
+        cerrarModal_A();
     }
 
     function juegopalabras(){
@@ -246,7 +246,8 @@
             //console.log('la palabra es  >>>>>: ' + palabra);
             textToAudio("Perfecto, aquí la tienes.");
             for (var i = 0; i < palabra.length; i++) {
-                console.log(i + "letra "+palabra[i]);
+                //console.log(i + "letra "+palabra[i]);
+                mensajeConsola(i + "letra "+palabra[i]);
                 let element = document.createElement("div");
                 element.id = palabra[i] + i;
                 if(i == 0){
@@ -292,6 +293,9 @@
             textToAudio(getCookies() + " La palabra que has puesto no es válida, y además no tienes el mismo número de caracteres. Inténtalo de nuevo.");
         }
     }
-
+function mensajeConsola(msg){
+    console.log(msg);
+    
+}
 
     window.onload = iniciar();

@@ -6,7 +6,7 @@
 
 > Esta práctica contiene la API  de chat GPT, y puede tener conceptos distintos a los que nosotros no nos unimos
 
-> Puedes cambiar o añadir tu KEY de GPT en este enlace [KEY API](https://platform.openai.com/account/api-keys)
+> Debes crear  tu KEY de GPT en este enlace [KEY API](https://platform.openai.com/account/api-keys)
 
 > Tambien utiliza una API obsoleta speechSynthesis.speak(). Pero es interesantes usar esta para procesar el texto a sonido entendible.
 
@@ -17,6 +17,9 @@ Lo que hace es:
 + Elige al azar 6 números del 1 al 49 y del 1 al 6 para el juego de azar.
 
 # Cualquier casualidad con la realidad, no tenemos nada que ver.
+
+Tienes dos opciones para insertar tu key api de chatGPT, la primera en harcodear en el main.js donde dice 'let apiKey =' aquí pones tu key. Debes quitar la parte donde se carga desde archivo externo. Este archivo debe estar en una carpeta 'key' y en un archivo 'api.txt' y aquí insertamos nuestro key api.
+
 
 
 

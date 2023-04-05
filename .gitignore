@@ -1,3 +1,3 @@
 .gitignore
 key
-js/texttovoice.js
+/js/texttovoice.js

@@ -15,7 +15,7 @@
     //  cargar key desde archivo
     const api = {
         recuperarAPI : function(){
-            fetch('/js/api.txt')
+            fetch('/key/api.txt')
             .then(res => res.text())
             .then(content => {
                 apiKey = content.split(/\n/);

@@ -24,7 +24,7 @@
         }
     }
     const maxTokens = 75;
-    //const apiKey = "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";
+    //const apiKey = "";
     // Generar chat GPT
     async function generateResponse(prompt, retorno) {     
         mensajeConsola("API 2 "+ apiKey);
@@ -79,14 +79,16 @@
     async function textToAudio(msg) {
         //console.log("Queremos decir? "+ decir);
         cambiarImagenFondo();
+        // es experimental y no es valido para todos los navegadortes
+        // iniciamos el constructor --> SpeechSynthesisUtterance()
+        let speech = new SpeechSynthesisUtterance();
+        
         // comprobamos si queremos que lo hable
         if(decir){
             // la caja de donde vamos ha sacar el texto ha speech
             //let msg = document.getElementById("text-to-speech").value;
 
-            // es experimental y no es valido para todos los navegadortes
-            // iniciamos el constructor --> SpeechSynthesisUtterance()
-            let speech = new SpeechSynthesisUtterance();
+            
             // recuperamos el lenguaje del navegaador
             let ln = navigator.language || navigator.userLanguage;
             mensajeConsola("El lenguaje es: " + ln);
@@ -154,6 +156,7 @@
             let nomInset = document.getElementById("nombre").value;
             if(nomInset.length >= 1){
                 acepta_cookie();
+                textToAudio("Gracias por escribir tu nombre.")
             }else{
                 textToAudio("No he detectado que escribieras nada en la caja de texto.");
                 textToAudio("Puedes seleccionar el botón naranja, donde pone 'no' y te convertirás en visitante.");
@@ -222,7 +225,7 @@
         document.getElementsByClassName("fondoModal_A")[0].style.display="none";
         document.getElementsByClassName("contenidoModal_A")[0].style.display="none";
         //textToAudio("Qué bien que estes por aquí " + getCookies()+". ¿que quieres hacer ahora?");
-        generateResponse("Dame una bienvenida calurosa. Dime el tiempo que hace en Madrid. Preguntame que quiero hacer ahora. En castellano.", true);
+        generateResponse("Soy "+ getCookies()+". Dime el tiempo que hace en Madrid. Preguntame que quiero hacer ahora. En castellano.", true);
     }
     
     function acepta_cookie() {

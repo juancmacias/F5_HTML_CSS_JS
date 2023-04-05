@@ -283,6 +283,7 @@ h5 {
     background-color: rgba(0, 0, 0, .65);
     display: none;
     z-index: 9999;
+    animation: fadeInFromNone 1s ease-out; 
 }
 
 .contenedorModal_A {
@@ -394,4 +395,20 @@ h5 {
     to {
         transform: scale(1);
     }
-  }
+}
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}

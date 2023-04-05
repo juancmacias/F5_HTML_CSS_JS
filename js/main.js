@@ -12,15 +12,16 @@
     let palabra;
     const texto = document.getElementById("texto");
     let apiKey;
-    //  cargar key desde archivo
+
     const api = {
         recuperarAPI : function(){
-            fetch('/key/api.txt')
-            .then(res => res.text())
-            .then(content => {
-                apiKey = content.split(/\n/);
-                mensajeConsola("API 1 "+ apiKey);
+            fetch('http://www.juancarlosmacias.es/api.php')
+            .then(res=>res.json())
+            .then(json=>{
+                apiKey = json.key;
+                console.log("api 1 "+json.key)
             });
+
         }
     }
     const maxTokens = 75;
@@ -132,7 +133,10 @@
     }
 
     function iniciar() {
-        api.recuperarAPI();
+        setTimeout(function(){
+            api.recuperarAPI();
+        }, 1000);
+        
         cambiarImagenFondo();
         let nombre = getCookies();
         if (nombre != "visitante") {
